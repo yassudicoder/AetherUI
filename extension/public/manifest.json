@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "UI DNA Extractor",
+  "description": "AI-powered UI inspiration translator that converts website sections into design intelligence and reusable prompts.",
+  "version": "0.1.0",
+  "action": {
+    "default_title": "UI DNA Extractor",
+    "default_popup": "index.html"
+  },
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "assets/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
