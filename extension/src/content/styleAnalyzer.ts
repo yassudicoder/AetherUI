@@ -130,3 +130,34 @@ export const analyzeEffects = (root: HTMLElement): EffectsStats => {
     glassmorphismScore: nodeCount > 0 ? Math.round((frostedCount / nodeCount) * 100) : 0,
   }
 }
+
+export const classifyInteractionEnergy = (computed: CSSStyleDeclaration, styleLabel: string): string => {
+  if (computed.transitionDuration !== '0s' || computed.animationDuration !== '0s') {
+    return styleLabel === 'brutalist' ? 'Sharp and deliberate' : 'Smooth and expressive'
+  }
+
+  if (styleLabel === 'editorial luxury') {
+    return 'Calm and editorial'
+  }
+
+  return 'Restrained and product-led'
+}
+
+export const classifyVisualPsychology = (styleLabel: string): string => {
+  switch (styleLabel) {
+    case 'cinematic minimal':
+      return 'Uses quiet contrast and spacious framing to signal premium restraint.'
+    case 'editorial luxury':
+      return 'Uses typographic hierarchy and elegant pacing to feel editorial and elevated.'
+    case 'futuristic':
+      return 'Uses glow, depth, and gradient energy to feel forward-looking and intelligent.'
+    case 'brutalist':
+      return 'Uses stark geometry and raw surfaces to feel direct and confrontational.'
+    case 'startup SaaS':
+      return 'Uses structured spacing and action-led composition to feel clear and conversion focused.'
+    case 'immersive':
+      return 'Uses motion and layered surfaces to pull the viewer into a story-driven experience.'
+    default:
+      return 'Uses balanced hierarchy and tasteful rhythm to feel modern and trustworthy.'
+  }
+}

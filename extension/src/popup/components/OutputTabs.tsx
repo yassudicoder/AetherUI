@@ -21,8 +21,9 @@ export const OutputTabs = ({ activeTab, onCopyActive, onCopyFull, onExport, onTa
     <Card className="p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-[11px] font-medium uppercase text-zinc-500">Analysis Console</div>
+          <div className="text-[11px] font-medium uppercase text-zinc-500">Premium Analysis</div>
           <h2 className="mt-1 truncate text-sm font-semibold text-zinc-50">{activeLabel}</h2>
+          <p className="mt-1 text-[11px] leading-5 text-zinc-400">Readable intelligence for AI prompts, design direction, and export workflows.</p>
         </div>
         <div className="flex items-center gap-2">
           <Button size="sm" variant="ghost" icon={Copy} onClick={onCopyActive}>

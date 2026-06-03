@@ -13,7 +13,9 @@ const STYLE_ID = 'ui-dna-hover-style'
 const safeSendMessage = (message: unknown): void => {
   try {
     if (typeof chrome !== 'undefined' && chrome.runtime && typeof chrome.runtime.sendMessage === 'function') {
-      chrome.runtime.sendMessage(message)
+      chrome.runtime.sendMessage(message, () => {
+        void chrome.runtime.lastError
+      })
     }
   } catch (err) {
     // ignore - extension may be reloading/unloading
@@ -319,17 +321,42 @@ export class ElementSelector {
 
   private detectFrameworkHint(target: HTMLElement): string {
     const className = target.className.toString().toLowerCase()
+    const html = document.documentElement.outerHTML.toLowerCase()
 
-    if (className.includes('tw-') || className.includes('md:') || className.includes('lg:')) {
-      return 'Tailwind likely'
+    if (className.includes('tw-') || className.includes('md:') || className.includes('lg:') || html.includes('tailwind')) {
+      return 'Tailwind 90%'
     }
 
-    if (className.includes('framer') || className.includes('motion')) {
-      return 'Framer Motion likely'
+    if (className.includes('framer') || className.includes('motion') || html.includes('framer-motion')) {
+      return 'Framer Motion 93%'
     }
 
-    if (className.includes('gsap')) {
-      return 'GSAP likely'
+    if (className.includes('gsap') || html.includes('gsap')) {
+      return 'GSAP 91%'
+    }
+
+    if (html.includes('data-v-') || html.includes('__vue') || className.includes('v-')) {
+      return 'Vue 92%'
+    }
+
+    if (html.includes('data-svelte') || html.includes('svelte')) {
+      return 'Svelte 92%'
+    }
+
+    if (html.includes('data-astro') || html.includes('astro')) {
+      return 'Astro 91%'
+    }
+
+    if (html.includes('data-solid') || html.includes('solid')) {
+      return 'SolidJS 90%'
+    }
+
+    if (html.includes('__remix') || html.includes('remix')) {
+      return 'Remix 90%'
+    }
+
+    if (html.includes('__nuxt') || html.includes('nuxt')) {
+      return 'Nuxt 91%'
     }
 
     return 'Modern React'

@@ -71,12 +71,27 @@ export interface StructureStats {
 }
 
 export interface FrameworkDetection {
-  tailwind: boolean
-  react: boolean
-  nextjs: boolean
-  gsap: boolean
-  framerMotion: boolean
-  bootstrap: boolean
+  tailwind: number
+  react: number
+  nextjs: number
+  gsap: number
+  framerMotion: number
+  bootstrap: number
+  vue: number
+  svelte: number
+  astro: number
+  solidjs: number
+  remix: number
+  nuxt: number
+}
+
+export interface StyleIntelligence {
+  styleLabel: string
+  emotionalTone: string
+  interactionEnergy: string
+  visualPsychology: string
+  premiumSignals: string[]
+  intelligenceSummary: string
 }
 
 export interface ExtractedUIData {
@@ -94,12 +109,7 @@ export interface ExtractedUIData {
   motion: MotionStats
   structure: StructureStats
   frameworks: FrameworkDetection
-  styleIntelligence: {
-    styleLabel: string
-    emotionalTone: string
-    premiumSignals: string[]
-    intelligenceSummary: string
-  }
+  styleIntelligence: StyleIntelligence
   selectedNodeMeta: {
     tag: string
     className: string
@@ -113,12 +123,59 @@ export interface AnalysisOutput {
   aiPrompt: string
   designAnalysis: string
   designDna: string
+  landingPageDna: string
+  whyThisWorks: string
+  stylePersonality: string
+  aetherScore: string
   buildPattern: string
+  colorDna: string
   typography: string
   layout: string
   components: string
   tailwindTokens: string
+  similarDesign: string
+  cursorExport: string
+  v0Export: string
   reactGuidance: string
   motionAnalysis: string
   jsonExport: string
 }
+
+export type PlanTier = 'free' | 'pro'
+
+export type SignInProvider = 'google' | 'github' | 'guest'
+
+export interface AccountState {
+  name: string
+  email: string
+  provider: SignInProvider
+  plan: PlanTier
+  savedAnalyses: number
+  promptHistory: number
+  exportedPrompts: number
+  favorites: number
+  workspaceName: string
+}
+
+export interface UsageState {
+  date: string
+  aiAnalyses: number
+  fullPageCaptures: number
+  exports: number
+}
+
+export interface SavedAnalysisRecord {
+  id: string
+  title: string
+  url: string
+  styleLabel: string
+  createdAt: string
+  favorite: boolean
+}
+
+export interface UpgradeBenefit {
+  title: string
+  detail: string
+}
+
+export type ExportTarget = 'cursor' | 'v0' | 'chatgpt' | 'claude' | 'react' | 'tailwind' | 'json'

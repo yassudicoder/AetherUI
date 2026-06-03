@@ -1,14 +1,14 @@
-# UI DNA Extractor
+# AetherUI
 
-UI DNA Extractor is a Chrome Extension (Manifest V3) that translates website UI into structured design intelligence and AI-friendly prompts.
+AetherUI is a premium freemium AI design intelligence platform for Chrome that translates modern interfaces into reusable design systems, premium prompts, and export-ready frontend guidance.
 
 ## Product Positioning
 
-This is an AI UI inspiration translator.
+AetherUI is not a DevTools clone or CSS copier.
 
-- It analyzes design language, visual systems, and motion behavior.
-- It generates reusable prompts and guidance for building fresh interfaces.
-- It does not clone websites or copy raw source designs.
+- It analyzes design language, visual systems, motion, and landing-page storytelling.
+- It generates reusable prompts, similarity ideas, and AI export workflows.
+- It keeps the free tier useful while reserving deeper analysis and exports for Pro.
 
 ## Tech Stack
 
@@ -47,6 +47,12 @@ This is an AI UI inspiration translator.
   - Layout
   - Components
 
+## Freemium Experience
+
+- Free plan: 5 AI analyses per day, 3 full-page captures per day, limited exports.
+- Pro plan: unlimited analysis, landing-page DNA, similarity generation, and export workflows.
+- Account state, history, and favorites are stored locally in the extension shell.
+
 ## Live Hover Intelligence
 
 When selection mode is enabled, the extension now renders a live AI-style hover overlay instead of only a border highlight.
@@ -59,10 +65,17 @@ When selection mode is enabled, the extension now renders a live AI-style hover 
 
 ## Analysis Model
 
-The popup now uses an eight-tab intelligence console:
+The popup now uses a premium intelligence console:
 
 - AI Prompt
-- Design DNA
+- Aether Score
+- Landing Page DNA
+- Why This Works
+- Style Personality
+- Color DNA
+- Similar Design
+- Cursor
+- v0
 - Build Pattern
 - Motion
 - Tokens
@@ -71,6 +84,15 @@ The popup now uses an eight-tab intelligence console:
 - Components
 
 The generated output emphasizes cinematic, premium, AI-native design language instead of raw CSS or DOM dumps.
+
+Key premium outputs include:
+
+- Landing Page DNA
+- Why This Works
+- Style Personality
+- AetherUI Score
+- Similar Design generation prompts
+- Cursor, v0, ChatGPT, Claude, React, Tailwind, and JSON export text
 
 ## Setup
 

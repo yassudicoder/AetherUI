@@ -9,8 +9,8 @@ export const generatePrompt = (data: ExtractedUIData): string => {
   ]
 
   const frameworkHints = Object.entries(data.frameworks)
-    .filter(([, enabled]) => enabled)
-    .map(([name]) => name)
+    .filter(([, score]) => score >= 45)
+    .map(([name, score]) => `${name} ${score}%`)
     .join(', ')
 
   return [
@@ -23,6 +23,8 @@ export const generatePrompt = (data: ExtractedUIData): string => {
     `- rounded language using ${data.effects.borderRadius.slice(0, 3).join(', ') || 'soft radius values'}`,
     `- color direction from ${data.colors.backgrounds.slice(0, 3).join(' | ') || 'neutral + accent palette'}`,
     `- emotional tone: ${data.styleIntelligence.emotionalTone}`,
+    `- interaction energy: ${data.styleIntelligence.interactionEnergy}`,
+    `- visual psychology: ${data.styleIntelligence.visualPsychology}`,
     `- premium signals: ${data.styleIntelligence.premiumSignals.join(' | ')}`,
     '',
     'Use:',
@@ -31,6 +33,8 @@ export const generatePrompt = (data: ExtractedUIData): string => {
     '- Framer Motion for polished interactions',
     '',
     frameworkHints ? `Detected stack hints from source UI: ${frameworkHints}` : 'Detected stack hints: not strongly identifiable',
+    '',
+    'Add a companion narrative for why the design works, a landing page DNA summary, and a similar-design generation path that changes composition but preserves taste.',
     '',
     'Do not clone the original design 1:1. Translate the style language into a new composition with original structure and premium motion language.',
   ].join('\n')

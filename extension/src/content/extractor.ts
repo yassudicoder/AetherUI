@@ -1,19 +1,27 @@
 import { detectAnimations } from './animationDetector'
-import { analyzeColors, analyzeEffects, analyzeLayout, analyzeTypography } from './styleAnalyzer'
+import { analyzeColors, analyzeEffects, analyzeLayout, analyzeTypography, classifyInteractionEnergy, classifyVisualPsychology } from './styleAnalyzer'
 import type { ExtractedUIData, FrameworkDetection, StructureStats } from '../types'
 import { truncate, uniqueSorted } from '../utils/helpers'
 
 const detectFrameworks = (): FrameworkDetection => {
   const scripts = Array.from(document.querySelectorAll('script[src]')).map((script) => script.getAttribute('src')?.toLowerCase() ?? '')
   const html = document.documentElement.outerHTML.toLowerCase()
+  const hasClassClue = (pattern: string) => Array.from(document.querySelectorAll(`[class*="${pattern}"]`)).length > 0
+  const confidence = (enabled: boolean, strong = 92, weak = 58) => (enabled ? strong : weak)
 
   return {
-    tailwind: html.includes('tailwind') || html.includes('tw-') || Array.from(document.querySelectorAll('[class*="md:"], [class*="lg:"]')).length > 0,
-    react: scripts.some((src) => src.includes('react')) || html.includes('__reactfiber') || html.includes('data-reactroot'),
-    nextjs: html.includes('_next') || scripts.some((src) => src.includes('next')),
-    gsap: scripts.some((src) => src.includes('gsap')) || html.includes('gsap'),
-    framerMotion: scripts.some((src) => src.includes('framer')) || html.includes('framer-motion'),
-    bootstrap: scripts.some((src) => src.includes('bootstrap')) || Array.from(document.querySelectorAll('[class*="col-"]')).length > 0,
+    tailwind: confidence(html.includes('tailwind') || html.includes('tw-') || Array.from(document.querySelectorAll('[class*="md:"], [class*="lg:"]')).length > 0, 96, 12),
+    react: confidence(scripts.some((src) => src.includes('react')) || html.includes('__reactfiber') || html.includes('data-reactroot'), 94, 18),
+    nextjs: confidence(html.includes('_next') || scripts.some((src) => src.includes('next')), 93, 6),
+    gsap: confidence(scripts.some((src) => src.includes('gsap')) || html.includes('gsap'), 92, 5),
+    framerMotion: confidence(scripts.some((src) => src.includes('framer')) || html.includes('framer-motion'), 94, 8),
+    bootstrap: confidence(scripts.some((src) => src.includes('bootstrap')) || Array.from(document.querySelectorAll('[class*="col-"]')).length > 0, 88, 10),
+    vue: confidence(html.includes('__vuebundle') || scripts.some((src) => src.includes('vue')) || html.includes('data-v-') || hasClassClue('v-'), 93, 5),
+    svelte: confidence(html.includes('data-svelte') || scripts.some((src) => src.includes('svelte')), 93, 5),
+    astro: confidence(html.includes('data-astro') || scripts.some((src) => src.includes('astro')), 92, 4),
+    solidjs: confidence(html.includes('data-solid') || scripts.some((src) => src.includes('solid')), 91, 5),
+    remix: confidence(html.includes('__remix') || scripts.some((src) => src.includes('remix')), 91, 4),
+    nuxt: confidence(html.includes('__nuxt') || scripts.some((src) => src.includes('nuxt')), 92, 4),
   }
 }
 
@@ -90,6 +98,8 @@ const classifyStyleIntelligence = (root: HTMLElement) => {
 
   const matches = labels.filter(([, enabled]) => enabled).map(([label]) => label)
   const styleLabel = matches[0] || 'cinematic minimal'
+  const interactionEnergy = classifyInteractionEnergy(computed, styleLabel)
+  const visualPsychology = classifyVisualPsychology(styleLabel)
 
   return {
     styleLabel,
@@ -101,12 +111,15 @@ const classifyStyleIntelligence = (root: HTMLElement) => {
           : styleLabel === 'Linear-inspired'
             ? 'precise, calm, and product-focused'
             : 'quietly premium and polished',
+    interactionEnergy,
+    visualPsychology,
     premiumSignals: uniqueSorted([
-      computed.borderRadius,
-      computed.boxShadow,
+      computed.borderRadius !== '0px' ? 'soft geometry' : '',
+      computed.boxShadow !== 'none' ? 'layered depth' : '',
       computed.transitionDuration !== '0s' ? 'smooth transitions' : '',
       computed.backdropFilter !== 'none' ? 'glassmorphism depth' : '',
       computed.letterSpacing !== 'normal' ? 'careful typography rhythm' : '',
+      computed.backgroundImage.includes('gradient') ? 'cinematic gradient layers' : '',
     ]),
     intelligenceSummary:
       styleLabel === 'startup SaaS'

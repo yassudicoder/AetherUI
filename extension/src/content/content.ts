@@ -18,7 +18,9 @@ const safeSendMessage = (message: unknown): void => {
   try {
     // defensive checks in case runtime is unavailable during reload
     if (typeof chrome !== 'undefined' && chrome.runtime && typeof chrome.runtime.sendMessage === 'function') {
-      chrome.runtime.sendMessage(message)
+      chrome.runtime.sendMessage(message, () => {
+        void chrome.runtime.lastError
+      })
     }
   } catch (err) {
     // ignore failures caused by extension unload/reload; useful during development
